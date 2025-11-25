@@ -1,0 +1,9 @@
+[Bb]in/
+[Oo]bj/
+*.exe
+*.dll
+*.pdb
+*.suo
+*.user
+*.bak
+/data/**/*.txt

@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Aoc/Aoc.fsproj" />
+    <Project Path="src/Cli/Cli.fsproj" />
+    <Project Path="src/Year2024.Tests/Year2024.Tests.fsproj" />
+    <Project Path="src/Year2024/Year2024.fsproj" />
+    <Project Path="src/Year2025.Tests/Year2025.Tests.fsproj" />
+    <Project Path="src/Year2025/Year2025.fsproj" />
+  </Folder>
+</Solution>
