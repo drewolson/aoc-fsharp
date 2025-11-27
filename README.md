@@ -15,5 +15,5 @@ dotnet test
 ## Run
 
 ```
-dotnet run --project src/Cli -- --help
+./aoc --help
 ```
