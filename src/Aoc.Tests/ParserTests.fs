@@ -17,7 +17,7 @@ module ParserTests =
 
     [<Property>]
     let ``sepByEndBy parses arbitrary sized collections`` (list: ImmutableArray<int>) =
-        let input = list |> Seq.map (fun i -> i.ToString()) |> String.concat ";"
+        let input = list |> Seq.map string |> String.concat ";"
 
         let result =
             input |> Aoc.Parser.parse (Aoc.Parser.sepEndBy pint32 (pstring ";") .>> eof)
