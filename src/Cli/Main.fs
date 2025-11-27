@@ -22,6 +22,8 @@ module Main =
         match args with
         | { Year = 2024; Day = 1; Part = 1 } -> Year2024.Day01.part1 input |> printfn "%A"
         | { Year = 2024; Day = 1; Part = 2 } -> Year2024.Day01.part2 input |> printfn "%A"
+        | { Year = 2024; Day = 2; Part = 1 } -> Year2024.Day02.part1 input |> printfn "%A"
+        | { Year = 2024; Day = 2; Part = 2 } -> Year2024.Day02.part2 input |> printfn "%A"
         | { Year = 2025; Day = 1; Part = 1 } -> Year2025.Day01.part1 input |> printfn "%A"
         | { Year = year; Day = day; Part = part } -> failwithf "Unknown year, day, and part: %i, %i, %i" year day part
 

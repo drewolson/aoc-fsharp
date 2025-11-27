@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-./src/Cli/bin/Debug/net10.0/Cli "$@"
+dotnet build --nologo -v q -p:WarningLevel=0 /clp:NoSummary && \
+  ./src/Cli/bin/Debug/net10.0/Cli "$@"
