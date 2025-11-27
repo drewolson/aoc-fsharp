@@ -1,6 +1,7 @@
 namespace Year2024
 
 module Day01 =
+    open Aoc
     open XParsec
 
     let pLine =
@@ -12,11 +13,11 @@ module Day01 =
             return [| x; y |]
         }
 
-    let pInput = Aoc.Parser.sepEndBy1 pLine CharParsers.newline
+    let pInput = Parser.sepEndBy1 pLine CharParsers.newline
 
     let part1 input =
         input
-        |> Aoc.Parser.parse pInput
+        |> Parser.parse pInput
         |> Array.transpose
         |> Array.map Array.sort
         |> Array.transpose
@@ -24,7 +25,7 @@ module Day01 =
         |> Array.sum
 
     let part2 input =
-        let buckets = input |> Aoc.Parser.parse pInput |> Array.transpose
+        let buckets = input |> Parser.parse pInput |> Array.transpose
 
         buckets[0]
         |> Array.sumBy (fun n -> n * (buckets[1] |> Array.filter (fun x -> x = n) |> Array.length))
