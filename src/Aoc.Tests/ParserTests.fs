@@ -1,6 +1,6 @@
 namespace Aoc.Tests
 
-module ParserTests =
+module ``Parser`` =
     open Aoc
     open FsCheck.Xunit
     open System.Collections.Immutable

@@ -1,6 +1,6 @@
 namespace Year2024.Tests
 
-module Day01Tests =
+module ``day 01`` =
     open Xunit
     open Year2024
 
