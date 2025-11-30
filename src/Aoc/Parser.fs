@@ -23,3 +23,5 @@ module Parser =
         | Ok success -> success.Parsed
 
     let delay p = parser { return! p () }
+
+    let rec fix f = parser { return! f (fix f) }

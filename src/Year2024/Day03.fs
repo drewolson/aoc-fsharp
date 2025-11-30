@@ -22,10 +22,9 @@ module Day03 =
             return Mul(a, b)
         }
 
-    let rec pToken _ =
-        choice [ pDo; pDont; pMul; anyChar >>. Parser.delay pToken ]
+    let pToken = Parser.fix (fun r -> choice [ pDo; pDont; pMul; anyChar >>. r ])
 
-    let pMuls = many1 (Parser.delay pToken)
+    let pMuls = many1 pToken
 
     let part1 =
         Parser.parse pMuls
