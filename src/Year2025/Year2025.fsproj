@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="FSharpx.Collections" Version="3.1.0" />
+    <PackageReference Include="XParsec" Version="0.2.4" />
   </ItemGroup>
 
 </Project>
