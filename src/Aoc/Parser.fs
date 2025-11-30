@@ -21,3 +21,5 @@ module Parser =
         match Reader.ofString str () |> p with
         | Error err -> failwithf "%A" err
         | Ok success -> success.Parsed
+
+    let delay p = parser { return! p () }
