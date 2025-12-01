@@ -9,13 +9,13 @@ module Parser =
             return values
         }
 
-    let sepEndBy1 p s = extractFirst sepEndBy1 p s
+    let sepEndBy1' p s = extractFirst sepEndBy1 p s
 
-    let sepEndBy p s = extractFirst sepEndBy p s
+    let sepEndBy' p s = extractFirst sepEndBy p s
 
-    let sepBy1 p s = extractFirst sepBy1 p s
+    let sepBy1' p s = extractFirst sepBy1 p s
 
-    let sepBy p s = extractFirst sepBy p s
+    let sepBy' p s = extractFirst sepBy p s
 
     let parse p str =
         match Reader.ofString str () |> p with

@@ -4,9 +4,9 @@ module Day02 =
     open Aoc
     open XParsec
 
-    let pLine = Parser.sepBy1 CharParsers.pint32 (CharParsers.pchar ' ') |>> List.ofSeq
+    let pLine = Parser.sepBy1' CharParsers.pint32 (CharParsers.pchar ' ') |>> List.ofSeq
 
-    let pInput = Parser.sepEndBy1 pLine CharParsers.newline
+    let pInput = Parser.sepEndBy1' pLine CharParsers.newline
 
     let safe line =
         let rec aux l =

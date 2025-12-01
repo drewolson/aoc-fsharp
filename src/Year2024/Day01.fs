@@ -13,7 +13,7 @@ module Day01 =
             return [| x; y |]
         }
 
-    let pInput = Parser.sepEndBy1 pLine CharParsers.newline
+    let pInput = Parser.sepEndBy1' pLine CharParsers.newline
 
     let part1 input =
         input

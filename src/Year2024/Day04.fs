@@ -6,7 +6,7 @@ module Day04 =
     open Aoc.Parser
 
     let pGrid =
-        sepEndBy1 (many1 (asciiLetter |>> string) |>> Array.ofSeq) newline
+        sepEndBy1' (many1 (asciiLetter |>> string) |>> Array.ofSeq) newline
         |>> Array.ofSeq
 
     let coordsToWord (grid: array<array<string>>) coords =

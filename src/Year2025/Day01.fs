@@ -1,54 +1,28 @@
 namespace Year2025
 
 module Day01 =
-    open Aoc
+    open Aoc.Parser
     open XParsec
     open XParsec.CharParsers
 
-    type Rotation =
-        | Left of int
-        | Right of int
+    let pLeft = pchar 'L' >>. pint32 |>> fun n -> -n
 
-    let pLeft = pchar 'L' >>. pint32 |>> Left
+    let pRight = pchar 'R' >>. pint32
 
-    let pRight = pchar 'R' >>. pint32 |>> Right
+    let pRotations = sepEndBy1' (pLeft <|> pRight) newline
 
-    let pRotations = Parser.sepEndBy1 (pLeft <|> pRight) newline
+    let shrink n =
+        let x = n % 100
+        if x < 0 then x + 100 else x
 
-    let rec shrink n =
-        if n > 99 then shrink (n - 100)
-        elif n < 0 then shrink (n + 100)
-        else n
-
-    let expand r =
-        match r with
-        | Left i -> Seq.replicate i -1
-        | Right i -> Seq.replicate i 1
-
-    let part1 =
-        Parser.parse pRotations
-        >> Seq.mapFold
-            (fun s r ->
-                let n =
-                    match r with
-                    | Left i -> s - i
-                    | Right i -> s + i
-                    |> shrink
-
-                n, n)
-            50
-        >> fst
+    let countZeros: seq<int> -> int =
+        Seq.scan (fun s n -> s + n |> shrink) 50
         >> Seq.filter (fun l -> l = 0)
         >> Seq.length
 
-    let part2 =
-        Parser.parse pRotations
-        >> Seq.collect expand
-        >> Seq.fold
-            (fun (c, s) n ->
-                let x = c + n |> shrink
-                if x = 0 then x, s + 1 else x, s
+    let part1 = parse pRotations >> countZeros
 
-            )
-            (50, 0)
-        >> snd
+    let part2 =
+        parse pRotations
+        >> Seq.collect (fun r -> if r < 0 then Seq.replicate -r -1 else Seq.replicate r 1)
+        >> countZeros
