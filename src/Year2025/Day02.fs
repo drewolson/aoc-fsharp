@@ -19,14 +19,14 @@ module Day02 =
         let s = string n
         let l = String.length s
 
-        l % 2 = 0 && s[0 .. l / 2 - 1] = s[l / 2 .. l - 1]
+        l % 2 = 0 && s[.. l / 2 - 1] = s[l / 2 ..]
 
     let repeated n =
         let s = string n
         let l = String.length s
 
         seq { 0 .. l / 2 - 1 }
-        |> Seq.map (fun i -> s[0..i] |> Seq.replicate (l / (i + 1)) |> String.concat "")
+        |> Seq.map (fun i -> s[..i] |> Seq.replicate (l / (i + 1)) |> String.concat "")
         |> Seq.exists (fun c -> c = s)
 
     let solve f =
