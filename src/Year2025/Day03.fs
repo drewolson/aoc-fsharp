@@ -15,12 +15,11 @@ module Day03 =
 
         aux -1 n [||]
 
-    let part1 (input: string) =
+    let solve n (input: string) =
         input.TrimEnd().Split [| '\n' |]
         |> Array.map (Array.ofSeq >> Array.map string >> Array.map int64)
-        |> Array.sumBy (joltage 2)
+        |> Array.sumBy (joltage n)
 
-    let part2 (input: string) =
-        input.TrimEnd().Split [| '\n' |]
-        |> Array.map (Array.ofSeq >> Array.map string >> Array.map int64)
-        |> Array.sumBy (joltage 12)
+    let part1 = solve 2
+
+    let part2 = solve 12
