@@ -34,6 +34,8 @@ module Main =
         | { Year = 2025; Day = 2; Part = 2 } -> Year2025.Day02.part2 input |> printfn "%A"
         | { Year = 2025; Day = 3; Part = 1 } -> Year2025.Day03.part1 input |> printfn "%A"
         | { Year = 2025; Day = 3; Part = 2 } -> Year2025.Day03.part2 input |> printfn "%A"
+        | { Year = 2025; Day = 4; Part = 1 } -> Year2025.Day04.part1 input |> printfn "%A"
+        | { Year = 2025; Day = 4; Part = 2 } -> Year2025.Day04.part2 input |> printfn "%A"
         | { Year = year; Day = day; Part = part } -> failwithf "Unknown year, day, and part: %i, %i, %i" year day part
 
 
