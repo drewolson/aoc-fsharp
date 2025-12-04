@@ -46,7 +46,7 @@ module Day04 =
 
     let remove grid coords =
         let rec aux sum =
-            let r = Seq.filter (accessible grid) coords |> Array.ofSeq
+            let r = coords |> Seq.filter (accessible grid) |> Array.ofSeq
 
             if Seq.isEmpty r then
                 sum
