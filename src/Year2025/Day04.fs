@@ -7,37 +7,34 @@ module Day04 =
             |> Array.map (fun row -> row |> Array.ofSeq |> Array.map string)
             |> array2D
 
-        let xSize = grid.GetLength 1
-        let ySize = grid.GetLength 0
-
         let coords =
             seq {
-                for x in 0 .. xSize - 1 do
-                    for y in 0 .. ySize - 1 do
-                        x, y
+                for r in 0 .. grid.GetLength 0 - 1 do
+                    for c in 0 .. grid.GetLength 1 - 1 do
+                        r, c
             }
 
         grid, Array.ofSeq coords
 
-    let get (grid: string[,]) (x, y) =
+    let get (grid: string[,]) (r, c) =
         try
-            grid[y, x]
+            grid[r, c]
         with _ ->
             ""
 
-    let accessible (grid: string[,]) (x, y) =
-        if get grid (x, y) <> "@" then
+    let accessible grid (r, c) =
+        if get grid (r, c) <> "@" then
             false
         else
             let c =
-                [| x - 1, y - 1
-                   x - 1, y
-                   x - 1, y + 1
-                   x, y + 1
-                   x, y - 1
-                   x + 1, y - 1
-                   x + 1, y
-                   x + 1, y + 1 |]
+                [| r - 1, c - 1
+                   r - 1, c
+                   r - 1, c + 1
+                   r, c + 1
+                   r, c - 1
+                   r + 1, c - 1
+                   r + 1, c
+                   r + 1, c + 1 |]
                 |> Array.map (get grid)
                 |> Array.filter (fun c -> c = "@")
                 |> Array.length
@@ -46,15 +43,15 @@ module Day04 =
 
     let remove grid coords =
         let rec aux sum =
-            let r = Array.filter (accessible grid) coords
+            let rem = Array.filter (accessible grid) coords
 
-            if Seq.isEmpty r then
+            if Seq.isEmpty rem then
                 sum
             else
-                for x, y in r do
-                    grid[y, x] <- "."
+                for r, c in rem do
+                    grid[r, c] <- "."
 
-                aux (sum + Seq.length r)
+                aux (sum + Seq.length rem)
 
         aux 0
 
