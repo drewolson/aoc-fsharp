@@ -17,7 +17,7 @@ module Day04 =
                         x, y
             }
 
-        grid, coords
+        grid, Array.ofSeq coords
 
     let get (grid: string[,]) (x, y) =
         try
@@ -46,7 +46,7 @@ module Day04 =
 
     let remove grid coords =
         let rec aux sum =
-            let r = coords |> Seq.filter (accessible grid) |> Array.ofSeq
+            let r = Array.filter (accessible grid) coords
 
             if Seq.isEmpty r then
                 sum
@@ -61,7 +61,7 @@ module Day04 =
     let part1 input =
         let grid, coords = parse input
 
-        coords |> Seq.filter (accessible grid) |> Seq.length
+        coords |> Array.filter (accessible grid) |> Array.length
 
     let part2 input =
         let grid, coords = parse input
