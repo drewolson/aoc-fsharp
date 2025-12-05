@@ -17,7 +17,7 @@ module Day05 =
 
     let pInput =
         parser {
-            let! ranges = pRanges .>> (newline .>> newline)
+            let! ranges = pRanges .>> newline .>> newline
             let! ids = sepBy1' pint64 newline
 
             return ranges, ids
@@ -30,10 +30,9 @@ module Day05 =
         match ranges with
         | [] -> []
         | [ r ] -> [ r ]
-        | (sa, ea) :: (sb, eb) :: t when ea < sb -> (sa, ea) :: merge ((sb, eb) :: t)
         | (sa, ea) :: (_, eb) :: t when ea >= eb -> merge ((sa, ea) :: t)
         | (sa, ea) :: (sb, eb) :: t when ea >= sb && ea <= eb -> merge ((sa, eb) :: t)
-        | _ -> []
+        | r :: t -> r :: merge t
 
     let part1 input =
         let ranges, ids = parse pInput input
