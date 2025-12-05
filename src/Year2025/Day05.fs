@@ -29,13 +29,13 @@ module Day05 =
     let rec merge ranges =
         match ranges with
         | [] -> []
-        | [ r ] -> [ r ]
         | (sa, ea) :: (_, eb) :: t when ea >= eb -> merge ((sa, ea) :: t)
         | (sa, ea) :: (sb, eb) :: t when ea >= sb && ea <= eb -> merge ((sa, eb) :: t)
         | r :: t -> r :: merge t
 
     let part1 input =
         let ranges, ids = parse pInput input
+
         ids |> Seq.filter (fresh ranges) |> Seq.length
 
     let part2 =
