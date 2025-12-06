@@ -22,14 +22,6 @@ module Day06 =
             return nums, ops
         }
 
-    let pIinput2 =
-        parser {
-            let! nums = pLines .>> many (pchar ' ') .>> spaces
-            let! ops = pOps
-
-            return nums, ops
-        }
-
     let rec split =
         let rec aux acc s =
             if Array.isEmpty s then
