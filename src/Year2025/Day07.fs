@@ -45,10 +45,10 @@ module Day07 =
         aux (Set.singleton start) 0
 
     let countPaths height splitters start =
-        let cache = new Dictionary<int * int, int64>()
+        let cache = Cache.empty ()
 
         let rec aux (r, c) =
-            Dict.get_or cache (r, c) (fun _ ->
+            Cache.get_or cache (r, c) (fun _ ->
                 if r > height then
                     1L
                 elif Set.contains (r, c) splitters then
