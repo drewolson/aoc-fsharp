@@ -2,7 +2,6 @@ namespace Year2025
 
 module Day07 =
     open Aoc
-    open System.Collections.Generic
 
     let parse (input: string) =
         let lines = input.TrimEnd().Split [| '\n' |]
