@@ -17,7 +17,7 @@ module Day07 =
         let splitters =
             cells |> Array.filter (fun (_, x) -> x = '^') |> Array.map fst |> Set.ofArray
 
-        height, start, splitters
+        height, splitters, start
 
     let countSplits height splitters start =
         let rec aux beams count =
@@ -59,12 +59,6 @@ module Day07 =
 
 
 
-    let part1 input =
-        let height, start, splitters = parse input
+    let part1 input = input |> parse |||> countSplits
 
-        countSplits height splitters start
-
-    let part2 input =
-        let height, start, splitters = parse input
-
-        countPaths height splitters start
+    let part2 input = input |> parse |||> countPaths
