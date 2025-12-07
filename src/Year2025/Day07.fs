@@ -1,6 +1,7 @@
 namespace Year2025
 
 module Day07 =
+    open Aoc
     open System.Collections.Generic
 
     let parse (input: string) =
@@ -47,19 +48,13 @@ module Day07 =
         let cache = new Dictionary<int * int, int64>()
 
         let rec aux (r, c) =
-            if cache.ContainsKey((r, c)) then
-                cache[(r, c)]
-            else
-                let result =
-                    if r > height then
-                        1L
-                    elif Set.contains (r, c) splitters then
-                        aux (r, c + 1) + aux (r, c - 1)
-                    else
-                        aux (r + 1, c)
-
-                cache[(r, c)] <- result
-                result
+            Dict.get_or cache (r, c) (fun _ ->
+                if r > height then
+                    1L
+                elif Set.contains (r, c) splitters then
+                    aux (r, c + 1) + aux (r, c - 1)
+                else
+                    aux (r + 1, c))
 
         aux start
 
