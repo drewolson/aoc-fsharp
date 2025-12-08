@@ -24,20 +24,17 @@ module Day07 =
             if Set.isEmpty beams then
                 count
             else
-                let nextBeams =
+                let next, splits =
                     beams
                     |> Set.map (fun (r, c) -> r + 1, c)
                     |> Set.filter (fun (r, _) -> r < height)
-
-                let splits, next =
-                    Set.fold
-                        (fun (s, b) (r, c) ->
+                    |> Set.fold
+                        (fun (b, s) (r, c) ->
                             if Set.contains (r, c) splitters then
-                                s + 1, b |> Set.add (r, c + 1) |> Set.add (r, c - 1)
+                                b |> Set.add (r, c + 1) |> Set.add (r, c - 1), s + 1
                             else
-                                s, Set.add (r, c) b)
-                        (0, Set.empty)
-                        nextBeams
+                                Set.add (r, c) b, s)
+                        (Set.empty, 0)
 
                 aux next (count + splits)
 
