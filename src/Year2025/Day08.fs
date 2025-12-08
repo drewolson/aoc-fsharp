@@ -8,21 +8,26 @@ module Day08 =
     module UF =
         open System.Collections.Generic
 
-        type t<'a> = Dictionary<'a, 'a>
+        type t<'a> =
+            { parents: Dictionary<'a, 'a>
+              items: array<'a> }
 
         let create s =
             let d = new Dictionary<'a, 'a>()
             Seq.iter (fun e -> d[e] <- e) s
-            d
+            { parents = d; items = Array.ofSeq s }
 
-        let rec find x (uf: t<'a>) =
-            if uf[x] = x then
+        let rec find x uf =
+            if uf.parents[x] = x then
                 x
             else
-                uf[x] <- find uf[x] uf
-                uf[x]
+                uf.parents[x] <- find uf.parents[x] uf
+                uf.parents[x]
 
-        let union a b (uf: t<'a>) = uf[find a uf] <- find b uf
+        let union a b uf = uf.parents[find a uf] <- find b uf
+
+        let components uf =
+            uf.items |> Array.groupBy (fun e -> find e uf) |> Array.map snd
 
     let pPoint =
         parser {
@@ -41,21 +46,19 @@ module Day08 =
         | [ _ ] -> []
         | h :: t -> t |> List.map (fun e -> h, e) |> List.append (pairs t)
 
-    let rec merge uf l count (pairs: list<(int64 * int64 * int64) * (int64 * int64 * int64)>) =
+    let rec merge uf pairs =
         match pairs with
         | [] -> -1L
         | (a, b) :: t ->
-            let newCount = if UF.find a uf <> UF.find b uf then count + 1 else count
+            UF.union a b uf
 
-            if newCount = l - 1 then
+            if Array.length (UF.components uf) = 1 then
                 let ax, _, _ = a
                 let bx, _, _ = b
 
                 ax * bx
             else
-                UF.union a b uf
-                merge uf l newCount t
-
+                merge uf t
 
     let part1 n input =
         let points = input |> Parser.parse pInput |> List.ofSeq
@@ -68,21 +71,19 @@ module Day08 =
         |> List.take n
         |> List.iter (fun (a, b) -> UF.union a b uf)
 
-        points
-        |> List.groupBy (fun p -> UF.find p uf)
-        |> List.map (snd >> List.length)
-        |> List.sortBy (fun i -> -i)
-        |> List.take 3
-        |> List.reduce (fun a b -> a * b)
+        uf
+        |> UF.components
+        |> Array.map Array.length
+        |> Array.sortBy (fun i -> -i)
+        |> Array.take 3
+        |> Array.reduce (fun a b -> a * b)
 
     let part2 input =
         let points = input |> Parser.parse pInput |> List.ofSeq
         let uf = UF.create points
 
-        let l = List.length points
-
         points
         |> pairs
         |> List.sortBy (fun ((x1, y1, z1), (x2, y2, z2)) ->
             sqrt ((x1 - x2 |> float) ** 2 + (y1 - y2 |> float) ** 2 + (z1 - z2 |> float) ** 2))
-        |> merge uf l 0
+        |> merge uf
